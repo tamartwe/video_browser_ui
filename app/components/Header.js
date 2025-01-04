@@ -33,7 +33,7 @@ const Header = () => {
         const fetchData = async () => {
                 try {
                   const response = await axios.get(process.env.API_URL);
-                  const uniqueYears = [...new Set(response.data.videos.map(video => video.release_year))];
+                  const uniqueYears = [...new Set(response.data.videos.map(video => video.release_year))].sort((a, b) => b - a);
                   setReleaseYears([EMPTY_FILTER_LBL, ...uniqueYears]);
                   setGenres([{id : EMPTY_FILTER, name: EMPTY_FILTER_LBL},...response.data.genres]);
                 } catch (error) {

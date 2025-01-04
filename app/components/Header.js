@@ -30,15 +30,18 @@ const Header = () => {
 
     useEffect(() => {
         initFilters();
-        axios.get(process.env.API_URL)
-            .then(response => {
-                const uniqueYears = [...new Set(response.data.videos.map(video => video.release_year))];
-                setReleaseYears([EMPTY_FILTER_LBL, ...uniqueYears]);
-                setGenres([{id : EMPTY_FILTER, name: EMPTY_FILTER_LBL},...response.data.genres]);
-            })
-            .catch(error => {
-                console.error('Error fetching data: ', error);
-            });
+        const fetchData = async () => {
+                try {
+                  const response = await axios.get(process.env.API_URL);
+                  const uniqueYears = [...new Set(response.data.videos.map(video => video.release_year))];
+                  setReleaseYears([EMPTY_FILTER_LBL, ...uniqueYears]);
+                  setGenres([{id : EMPTY_FILTER, name: EMPTY_FILTER_LBL},...response.data.genres]);
+                } catch (error) {
+                  console.error('Error fetching data: ', error);
+                }
+              };
+          
+        fetchData();
     }, []);
 
     const handleSearchChange = (event) => {

@@ -1,5 +1,3 @@
-// pages/pixels.js
-
 import React from 'react';
 import CardList from '../components/CardList'
 

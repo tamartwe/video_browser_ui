@@ -7,12 +7,29 @@ import {YEAR_FILTER_KEY, GENRE_FILTER_KEY, EMPTY_FILTER , EMPTY_FILTER_LBL, SEAR
 
 const Header = () => {
     const [releaseYears, setReleaseYears] = useState([]);
-    const [selectedYear, setSelectedYear] = useState(localStorage.getItem(YEAR_FILTER_KEY) || '');
+    const [selectedYear, setSelectedYear] = useState('');
     const [genres, setGenres] = useState([]);
-    const [selectedGenre, setSelectedGenre] = useState(localStorage.getItem(GENRE_FILTER_KEY) || '');
-    const [searchValue, setSearchValue] = useState(localStorage.getItem(SEARCH_FILTER) || '');
+    const [selectedGenre, setSelectedGenre] = useState('');
+    const [searchValue, setSearchValue] = useState( '');
+
+    const initFilters = () => {
+        const yearFromLocalStorage = localStorage.getItem(YEAR_FILTER_KEY);
+        if (yearFromLocalStorage) {
+            setSelectedYear(yearFromLocalStorage);
+        }
+        const genreFromLocalStorage = localStorage.getItem(GENRE_FILTER_KEY);
+        if (genreFromLocalStorage) {
+            setSelectedGenre(genreFromLocalStorage);
+        }
+        const searchFromLocalStorage = localStorage.getItem(SEARCH_FILTER);
+        if (searchFromLocalStorage) {
+            setSearchValue(searchFromLocalStorage);
+        }
+    }
+    
 
     useEffect(() => {
+        initFilters();
         axios.get(process.env.API_URL)
             .then(response => {
                 const uniqueYears = [...new Set(response.data.videos.map(video => video.release_year))];

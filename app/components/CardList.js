@@ -35,8 +35,8 @@ const CardList = () => {
         }
         if (searchFilter != null && searchFilter !== EMPTY_STRING) {
             filteredVideos = filteredVideos.filter(video => 
-                video.title.toLowerCase().includes(searchFilter.toLowerCase()) ||
-                video.artist.toLowerCase().includes(searchFilter.toLowerCase())
+                video.title != null && (video.title.toString().toLowerCase().includes(searchFilter.toLowerCase())) ||
+                video.artist != null && (video.artist.toString().toLowerCase().includes(searchFilter.toLowerCase()))
             );
         }
         setVideos(filteredVideos);
